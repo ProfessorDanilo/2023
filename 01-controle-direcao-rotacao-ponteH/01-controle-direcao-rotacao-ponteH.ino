@@ -1,42 +1,75 @@
-//Programa: Controle de motor CC com o L293D Ponte H  
-//Autor: Arduino e Cia  
+/* PROGRAMA DE CONTROLE DE VELOCIDADE DE MOTOR CC
+ * pinagem da ponte H L293D
+ * 
+ *              U
+ *   ENABLE 1 1   16  Vss
+ *   INPUT 1  2   15  INPUT 4
+ *   OUTPUT 1 3   14  OUTPUT 4
+ *        GND 4   13  GND
+ *        GND 5   12  GND
+ *   OUTPUT 2 6   11  OUTPUT 3
+ *   INPUT 2  7   10  INPUT 3
+ *         Vs 8   9  ENABLE 2
+ *         
+ * Ligações com arduino:
+ * Digital ~3 Arduino ligada ao pino 1
+ * Digital 2 Arduino ligada ao pino 2
+ * Motor ligado ao ligada ao pino 3
+ * GND do Arduino ligado ao pino 4
+ * pino 5 desconectado
+ * Motor ligado ao ligada ao pino 6
+ * Digital 7 Arduino ligada ao pino 7
+ * 5 V do Arduino ligado ao pino 8
+ * 5 V do Arduino ligado ao pino 16
+ * Demais pinos desligados
+ * 
+ * Enable serve para controlar a velocidade do motor usando analogWrite         
+ * Input serve para controlar sentido de rotação do motor:
+ *    HIGH e LOW: um sentido
+ *    LOW e HIGH: outro sentido
+ * Output: liga no motor CC
+ * Vcc: tensão a ser fornecida para o motor
+ * 
+ * Material para ser usado em aula
+ * Principal fonte: https://www.arduinoecia.com.br/controle-de-motor-dc-com-o-l293d-ponte-h/
+ */
    
-int PinoVelocidade = 3; //Ligado ao pino 1 do L293D  
-int Entrada1 = 2; //Ligado ao pino 2 do L293D  
-int Entrada2 = 7; //Ligado ao pino 7 do L293D  
+int enablePin = 3;   
+int input1 = 2;
+int input2 = 7;
    
 void setup()  
 {  
-  //Define os pinos como saida  
-  pinMode(PinoVelocidade, OUTPUT);  
-  pinMode(Entrada1, OUTPUT);  
-  pinMode(Entrada2, OUTPUT);  
+  //configuração dos pinos 
+  pinMode(enablePin, OUTPUT);  
+  pinMode(input1, OUTPUT);  
+  pinMode(input2, OUTPUT);  
 }  
    
 void loop()  
 {  
-  //Define a velocidade de rotacao  
-  int velocidade = 500;  
-  analogWrite(PinoVelocidade, velocidade);   
+  //escolhe a velocidade (entre 0 e 255)
+  int velocidade = 255;  
+  analogWrite(enablePin, velocidade);   
 
-  //Aciona o motor  
-  digitalWrite(Entrada1, LOW);  
-  digitalWrite(Entrada2, HIGH);  
+  //liga o motor em um sentido
+  digitalWrite(input1, LOW);  
+  digitalWrite(input2, HIGH);  
   delay(3000);  
 
-  //Chama a rotina de parada do motor  
+  //Para o motor  
   para_motor();  
 
-  //Aciona o motor no sentido inverso  
-  digitalWrite(Entrada1, HIGH);  
-  digitalWrite(Entrada2, LOW);  
+  //liga o motor no outro sentido
+  digitalWrite(input1, HIGH);  
+  digitalWrite(input2, LOW);  
   delay(3000);  
   para_motor();  
 }  
     
 void para_motor()  
 {  
-  digitalWrite(Entrada1, LOW);  
-  digitalWrite(Entrada2, LOW);  
+  digitalWrite(input1, LOW);  
+  digitalWrite(input2, LOW);  
   delay(3000);  
 }  
