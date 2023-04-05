@@ -34,6 +34,8 @@ EXERCÍCIOS GERAIS
 20.  Faça um programa que recebe a nota de duas provas, uma chamada mensal (PM) e outra chamada de bimestral (PB), com pesos de 40% e 60% respectivamente; uma terceira avaliação, chamada de simulado bônus (SB), também existe, mas poderá apenas aumentar a média em um ponto, mas isso se a média final do aluno não passar de dez; o seu programa deverá retornar "Aprovado" se a nota for maior ou igual a 6 ou "Reprovado" se a nota for menor que 6. Não se preocupe com arredondamentos, mas o seu programa deverá fazer uma verificação se a média do aluno não é maior que 10, pois se assim for, a média será, na verdade, 10. Faça o teste com os seguintes valores: PM = 2, PB = 7, SB = 8 (media = 5,8); PM = 6, PB = 3, SB = 5 (media = 4,7); PM = 6, PB = 5, SB = 9 (media = 6,4); PM = 9,6, PB = 9,8, SB = 10 (media = 5,8).
 21.  Escreva um programa que calcule as raízes de uma função do segundo grau. O usuário deve fornecer apenas os coeficientes \\(a\\), \\(b\\) e \\(c\\) da equação \\(f(x)=ax^2+bx+c\\) e o programa deve avaliar primeiramente se a função possui raízes (\\(\\Delta >= 0\\)); caso possua, verificar se há apenas uma raiz (\\(\\Delta = 0\\)); e por fim calcular as raízes. Lembre-se que $$\\Delta = b^2-4ac$$ e que $$x=\\frac{-b\\pm\\sqrt{\\Delta}}{2a}.$$
 
+[Resolução dos exercícios gerais.](https://www.youtube.com/embed/cMcW8YPmiFI)
+
 EXERCÍCIOS ENVOLVENDO FÍSICA
 ----------------------------
 
@@ -46,3 +48,5 @@ Aqui será necessário fazer pesquisas na web para encontra fórmulas e valores 
 5.  Sabendo-se que a quantidade de calor \\(Q\\), em calorias, fornecido à uma massa de água \\(m\\), medida em gramas, gera uma variação de temperatura \\(\\Delta T\\) de acordo com a seguinte relação: $$Q=m\\cdot c\\cdot \\Delta T$$ sendo \\(c=1\\rm cal/(g\\cdot ^oC)\\) o calor específico da água.  
     Faça um programa que calcule a variação da temperatura da água sendo a massa e o calor dados fornecidos pelo usuário.
 6.  Faça um programa que receba a distância em anos-luz e retorne ao usuário a distância equivalente em metros, quilômetros e pés. Procure dados na internet para conseguir resolver esta questão.
+
+[Resolução dos exercícios gerais.](https://www.youtube.com/watch?v=GezX_KqC-L4&ab_channel=ProfessorDanilo)
