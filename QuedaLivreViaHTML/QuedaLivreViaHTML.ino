@@ -1,72 +1,51 @@
-/*
-código utilizado em projeto de ciências com o objetivo de medir a aceleração da gravidade
-início da construção do código: 09/05/2023
-término da construção: ainda não finalizado
-Professor: Danilo Lima
-*/
-//biblioteca para o wemos mini acessar a rede
-#include <WiFi.h> 
-char ssid[] = "nomeDaRede"; //nome da rede sem fio a ser conectada na rede
-char password[] = "senhaDaRede"; //senha da rede sem fio a ser conectada
- 
-WiFiServer server(80); //usaremos a porta 80, utilize outra em caso de problema (EX:8082,8089) no navegador digite IP:PORTA(EX: 192.168.0.15:8082)
- 
-void setup() {
-  Serial.begin(115200); //a velocidade do wemos é diferente da velocidade do Arduino
-  delay(10); //espera 10 milisegundos
-  Serial.println(""); 
-  Serial.println(""); 
-  Serial.print("Conectando a "); 
-  Serial.print(ssid);
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
 
-  WiFi.begin(ssid, password); //passa os parâmetros para conectar à rede
-    /* 
-    while (WiFi.status() != WL_CONNECTED) { //ENQUANTO STATUS FOR DIFERENTE DE CONECTADO
-    delay(500); //INTERVALO DE 500 MILISEGUNDOS
-    Serial.print("."); //ESCREVE O CARACTER NA SERIAL
-  }*/
-  Serial.println(""); 
-  Serial.print("Conectado a rede sem fio "); 
-  Serial.println(ssid);
-  server.begin(); //inicia o servisor para receber dados em "WiFiServer server(porta);"
-  Serial.println("Servidor iniciado.");
+const char* ssid = "Danilo_e_Udelis_2G"; // SSID da rede local
+const char* password = "982508999"; // Senha da rede local
+int ledPin = 2;
 
-  Serial.print("IP para se conectar ao NodeMCU: "); 
-  Serial.print("http://");
-  Serial.println(WiFi.localIP()); //utilize este IP para saber onde se conectar na rede
+ESP8266WebServer server(8080);
+
+void handleRoot() {
+  String html = "<html><body><h1>Ligar/Desligar LED</h1>";
+  html += "<form method=\"get\">";
+  html += "<button style=\"font-size:24px; padding: 20px 20px 20px 20px; margin-right: 10px; margin-top: 10px;\" onclick=\"window.location.href='/led?state=1'\">Ligar</button>";
+  html += "<button style=\"font-size:24px; padding: 20px 20px 20px 20px; margin-top: 10px;\" onclick=\"window.location.href='/led?state=0'\">Desligar</button>";
+  html += "</form></body></html>";
+
+  server.send(200, "text/html", html);
 }
-void loop() {
-  WiFiClient client = server.available(); //verifica se há alguém conectado
-    if (!client) { //se não conectado...
-    return; //...execute até que alguém esteja conectado
-  }
-  Serial.println("Novo cliente se conectou!"); //informa na serial que há cliente conectado
-    while(!client.available()){ //aguarde até que haja requisição do cliente
-      delay(1);
-  }
-  String request = client.readStringUntil('\r'); //lê a primeira linha da requisição
-  Serial.println(request); //Eescreve a requisição do cliente via serial
-  client.flush(); //aguarda até que todos os dados de saída sejam enviados ao cliente
 
-  client.println("HTTP/1.1 200 OK"); //informa ao cliente a versão do HTTP
-  client.println("Content-Type: text/html"); //informa ao cliente que o coneúdo é do tipo texto/html
-  client.println("");
-  client.println("<!DOCTYPE HTML>"); //informa ao navegador o tipo de conteúdo
-  /*
-     no trecho abaixo, inserimos o código HTML completo
-  */
-  client.println("<html lang=\"pt-br\">
-                    <head>
-                      <meta charset=\"UTF-8\">
-                      <title>Título da Página</title>
-                    </head>
-                    <body>
-                      <h1>Título Principal</h1>
-                      <p>Este é um exemplo de página HTML em português brasileiro com UTF-8.</p>
-                    </body>
-                  </html>
-                 ");
-  delay(1); //INTERVALO DE 1 MILISEGUNDO
-  Serial.println("Cliente desconectado"); //ESCREVE O TEXTO NA SERIAL
-  Serial.println(""); //PULA UMA LINHA NA JANELA SERIAL
+void handleLed() {
+  String state = server.arg("state");
+  digitalWrite(ledPin, state.toInt());
+  server.sendHeader("Location", "/");
+  server.send(303);
+}
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+  Serial.begin(115200);
+  
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  Serial.println("WiFi connected!");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+  
+  server.on("/", handleRoot);
+  server.on("/led", handleLed);
+  
+  server.begin();
+  Serial.println("Server started!");
+}
+
+void loop() {
+  server.handleClient();
 }
