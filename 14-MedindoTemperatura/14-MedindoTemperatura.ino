@@ -34,5 +34,5 @@ void loop(void){
   //C de Celcius... para Fahrenheit, use getTempFByIndex
   Serial.println(sensors.getTempCByIndex(0)); 
   //espera um minuto
-  delay(60000);
+  delay(59320);
 }
