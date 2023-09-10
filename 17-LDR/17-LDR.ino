@@ -6,7 +6,7 @@ void setup() {
 
 void loop() {
   if(analogRead(LDR) < 100){
-    digitalWrite(LED, HIGH);
+    digitalWrite(LED, HIGH); 
   }
   else{
     digitalWrite(LED, LOW);
