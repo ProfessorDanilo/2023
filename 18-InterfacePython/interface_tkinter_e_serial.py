@@ -13,15 +13,10 @@ ser = serial.Serial(port, baudrate)
 def alterar_cor_led():
     cores = ['red', 'green', 'gray']
     status = ['     erro     ', 'elet. ligado', ' desligado ']
-    cor_atual = led['bg']
     status_atual = led['text']
-    nova_cor = cores[(cores.index(cor_atual) + 1) % len(cores)]
+    cor_atual = led['red']
     novo_status = status[(status.index(status_atual) + 1) % len(status)]
-    led.config(bg=nova_cor, text=novo_status)
-    dados = ser.readline().decode('utf-8')
-    print(int(dados)==1)
-    print(dados=="1\n\n")    
-    print(int(dados))
+    led.config(bg=cor, text=novo_status)
 
 def atualizar_tabela():
     # Limpar a tabela antes de atualizar
@@ -44,7 +39,7 @@ caixa_texto = tk.Label(janela, textvariable=count, font=("Arial", 14))
 caixa_texto.grid(row=0, column=0, sticky='nw', padx=10, pady=10)
 
 # Botão para alterar a cor do LED
-botao_led = tk.Button(janela, text="INICIAR", command=alterar_cor_led)
+botao_led = tk.Button(janela, text="INICIAR", command=alterar_cor_led())
 botao_led.grid(row=0, column=1, padx=10, pady=10)
 
 # LED (usando um Label)
