@@ -2,11 +2,11 @@
  * vamos montar as conexões definindo as
  * variáveis
  */
-const int  enable_esqueda = 5,
+const int  enableEsqueda = 5,
       input1_esquerda = 6,
       input2_esquerda = 7,
       reflexao_esquerda = 12,
-      enable_direita = 9,
+      enableDireita = 9,
       input3_direita = 10,
       input4_direita = 11,
       reflexao_direita = 13;
@@ -19,11 +19,11 @@ int espera = 50;
 
 //definindo os pinos do Arduíno
 void setup(){
-  pinMode(enable_esquerda,OUTPUT);
+  pinMode(enableEsqueda,OUTPUT);
   pinMode(input1_esquerda,OUTPUT);
   pinMode(input2_esquerda,OUTPUT);
   pinMode(reflexao_esquerda,INPUT);
-  pinMode(enable_direita,OUTPUT);
+  pinMode(enableDireita,OUTPUT);
   pinMode(input3_direita,OUTPUT);
   pinMode(input4_direita,OUTPUT);
   pinMode(reflexao_direita,INPUT);
@@ -32,8 +32,8 @@ void setup(){
 //Criando as funções que farão o
 //Arduíno andar (frente/direita/esquerda)
 void frente(){
-  analogWrite(enable_esquerda, velocidade);
-  analogWrite(enable_direita, velocidade);
+  analogWrite(enableEsqueda, velocidade);
+  analogWrite(enableDireita, velocidade);
   //note que os comandos a seguir podem fazer
   //seu motor girar ao contrário do esperado
   digitalWrite(input1_esquerda, HIGH);
@@ -42,9 +42,9 @@ void frente(){
   digitalWrite(input4_direita, LOW);
 }
 
-void esquerda(){  
-  analogWrite(enable_esquerda, velocidade);
-  analogWrite(enable_direita, 0);
+void esquerda(){    
+  analogWrite(enableEsqueda, velocidade);
+  analogWrite(enableDireita, 0);
   //note que os comandos a seguir podem fazer
   //seu motor girar ao contrário do esperado
   digitalWrite(input1_esquerda, HIGH);
@@ -55,8 +55,8 @@ void esquerda(){
 }
 
 void direita(){  
-  analogWrite(enable_esquerda, 0);
-  analogWrite(enable_direita, velocidade);
+  analogWrite(enableEsqueda, 0);
+  analogWrite(enableDireita, velocidade);
   
   digitalWrite(input1_esquerda, LOW);
   digitalWrite(input2_esquerda, LOW);
@@ -68,8 +68,8 @@ void direita(){
 }
 
 void parar(){   
-  analogWrite(enable_esquerda, 0);
-  analogWrite(enable_direita, 0);  
+  analogWrite(enableEsqueda, 0);
+  analogWrite(enableDireita, 0);  
   digitalWrite(input1_esquerda, LOW);
   digitalWrite(input2_esquerda, LOW);
   digitalWrite(input3_direita, LOW);
